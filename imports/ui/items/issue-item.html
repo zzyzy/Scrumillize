@@ -1,5 +1,7 @@
 <template name="issueItem">
     <li>
-      {{description}}
+      <a href="{{pathFor route='issue' project_id=projectId issue_id=_id}}">
+        {{description}}
+      </a>
     </li>
 </template>
