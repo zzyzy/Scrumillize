@@ -1,5 +1,8 @@
 <template name="releaseItem">
-    <li>
-        <a href="#">{{releaseName}}</a>
-    </li>
+    <tr>
+      <td><a href="#">{{releaseName}}</a></td>
+      <td>{{description}}</td>
+      <td>{{formatDate(startDate)}}</td>
+      <td>{{formatDate(endDate)}}</td>
+    </tr>
 </template>

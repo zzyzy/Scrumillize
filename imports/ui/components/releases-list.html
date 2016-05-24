@@ -1,13 +1,9 @@
 <template name="releasesList">
     <div class="releasesList">
-        <h3>Releases in {{projectName}}</h3>
-        <form class="newRelease">
-            <input type="text" name="releaseName" placeholder="Type release name here">
-        </form>
-        <ul>
+        <table>
           {{#each releases}}
             {{> releaseItem}}
           {{/each}}
-        </ul>
+        </table>
     </div>
 </template>

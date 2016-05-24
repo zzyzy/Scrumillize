@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Releases } from '../../api/releases.js';
@@ -8,19 +7,7 @@ import './releases-list.html';
 
 Template.releasesList.helpers({
   releases() {
-    return Releases.find({});
+    return Releases.find({}, {projectId: this._id});
   }
 });
 
-Template.releasesList.events({
-  'submit .newRelease'(event) {
-    event.preventDefault();
-
-    const target = event.target;
-    const releaseName = target.releaseName.value;
-
-    Meteor.call('releases.insert', releaseName, Template.instance().data._id);
-
-    target.releaseName.value = "";
-  }
-});

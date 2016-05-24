@@ -1,4 +1,5 @@
 <template name="releaseBacklog">
     <h2>Release Backlog of {{projectName}}</h2>
+    <a href="{{pathFor route='manageReleases' project_id=_id}}">Manage Versions</a>
     {{> releasesList}}
 </template>
