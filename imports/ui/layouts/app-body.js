@@ -5,4 +5,5 @@ import './app-body.html';
 
 Template.appBody.onCreated(function() {
   Meteor.subscribe('projects');
+  Meteor.subscribe('issues');
 });

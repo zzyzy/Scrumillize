@@ -1,0 +1,13 @@
+<template name="issuesList">
+    <div class="issuesList">
+        <h3>Issues in {{projectName}}</h3>
+        <form class="newIssue">
+            <input type="text" name="description" placeholder="Type the user story here">
+        </form>
+        <ul>
+          {{#each issues}}
+            {{> issueItem}}
+          {{/each}}
+        </ul>
+    </div>
+</template>
