@@ -1,0 +1,8 @@
+<template name="projectDashboard">
+    <h2>Project Dashboard of {{projectName}}</h2>
+    <ul>
+        <li><a href="{{pathFor route='productBacklog' project_id=_id}}">Backlog</a></li>
+        <li><a href="{{pathFor route='releaseBacklog' project_id=_id}}">Releases</a></li>
+        <li><a href="{{pathFor route='sprintBacklog' project_id=_id}}">Sprints</a></li>
+    </ul>
+</template>

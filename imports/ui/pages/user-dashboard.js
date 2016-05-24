@@ -1,2 +1,2 @@
 import '../components/projects-list.js';
-import './dashboard.html';
+import './user-dashboard.html';

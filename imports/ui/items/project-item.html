@@ -1,5 +1,5 @@
 <template name="projectItem">
     <li>
-        <a href="/projects/{{_id}}">{{projectName}}</a>
+        <a href="{{pathFor route='projectDashboard' project_id=_id}}">{{projectName}}</a>
     </li>
 </template>
