@@ -1,4 +1,11 @@
 <template name="productBacklog">
-    <h2>Product Backlog of {{projectName}}</h2>
+    <h1 class="page-header">Product Backlog of {{projectName}}</h1>
+
+    <form class="newIssue">
+        <div class="form-group">
+            <input type="text" class="form-control" name="summary" placeholder="Type the user story here">
+        </div>
+    </form>
+
     {{> issuesList this}}
 </template>

@@ -1,7 +1,81 @@
 <template name="issueItemView">
-    <p>{{description}}</p>
-    <p>Status: </p>
-    <p>Priority: </p>
-    <p>Estimate: </p>
-    <p>Remaining: </p>
+    <button type="button" class="btn btn-default">Comment</button>
+
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default">Assign</button>
+        <div class="btn-group" role="group">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                More
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Delete</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default">To Do</button>
+        <button type="button" class="btn btn-default">In Progress</button>
+        <button type="button" class="btn btn-default">Done</button>
+    </div>
+
+
+    <p>Type: {{type}}</p>
+    <p>Priority: {{priority}}</p>
+    <p>Affects Version/s: {{affectedVersion}}</p>
+    <p>Status: {{status}}</p>
+    <p>Resolution: {{resolution}}</p>
+    <p>
+        Fix Version/s:
+        {{> addToReleaseModal this}}
+    </p>
+
+    <p>Description: {{description}}</p>
+    <p>Assignee: {{assignee}}</p>
+    <p>Reporter: {{reporter}}</p>
+    <p>Created: {{createdAt}}</p>
+    <p>Updated: {{lastModified}}</p>
+    <p>Comments: </p>
+
+</template>
+
+<template name="addToReleaseModal">
+    <button type="button" class="btn btn-info btn-lg openReleaseChooser" data-toggle="modal"
+            data-target="#addToRelease">{{releaseName releaseId}}</button>
+    <div class="modal fade" id="addToRelease" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add to release</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        {{#each release in releases}}
+                          {{#with release}}
+                            {{#if isChosenRelease release._id}}
+                                <a href="#" class="list-group-item active chooseRelease">{{release.releaseName}}</a>
+                            {{else}}
+                                <a href="#" class="list-group-item chooseRelease">{{release.releaseName}}</a>
+                            {{/if}}
+                          {{/with}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default confirmRelease" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </template>

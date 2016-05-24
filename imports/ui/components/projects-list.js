@@ -8,7 +8,7 @@ import './projects-list.html';
 
 Template.projectsList.helpers({
   projects() {
-    return Projects.find({});
+    return Projects.find();
   }
 });
 

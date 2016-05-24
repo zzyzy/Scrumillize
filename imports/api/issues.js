@@ -6,36 +6,43 @@ export const Issues = new Mongo.Collection('issues');
 
 if (Meteor.isServer) {
   Meteor.publish('issues', function () {
-    return Issues.find({});
+    return Issues.find();
   });
 }
 
 Meteor.methods({
-  'issues.insert'(description, projectId) {
-    check(description, String);
+  'createNewIssue'(summary, projectId) {
+    check(summary, String);
     check(projectId, String);
 
-    // Some logic here
-
     Issues.insert({
-      description,
+      summary,
       projectId,
-      status: 'open',
-      releaseId: '',
-      sprintId: '',
-      createdAt: new Date()
-      // createdBy: this.userId
+      releaseId: 'None',
+      estimate: 'Unestimated',
+      sprintId: 'None',
+      epicId: 'None',
+      description: 'None',
+      type: 'Story',
+      priority: 'Medium',
+      affectedVersion: 'None',
+      status: 'Todo',
+      resolution: 'Unresolved',
+      assignee: 'Unassigned',
+      reporter: '', // this.userId
+      createdAt: new Date(),
+      lastModified: new Date()
     });
   },
   'moveToRelease'(issueId, releaseId) {
     check(issueId, String);
     check(releaseId, String);
 
-    Issues.update({_id: issueId}, {$set: {releaseId}});
+    Issues.update({_id: issueId}, {$set: {releaseId: releaseId}});
   },
   'moveToSprint'(issueId, sprintId) {
     check(issueId, String);
-    check(releaseId, String);
+    check(sprintId, String);
 
     Issues.update({_id: issueId}, {$set: {sprintId}});
   }

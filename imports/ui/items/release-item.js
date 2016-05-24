@@ -4,10 +4,10 @@ import { moment } from 'meteor/momentjs:moment';
 import './release-item.html';
 
 Template.releaseItem.helpers({
-  formatDate(date) {
+  formatDate (date) {
     return moment(date).format('DD/MMM/YY');
   },
-  projectId() {
+  projectId () {
     return this.projectId;
   }
 });

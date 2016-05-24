@@ -1,9 +1,9 @@
 <template name="releasesList">
-    <div class="releasesList">
-        <table>
-          {{#each releases}}
-            {{> releaseItem}}
-          {{/each}}
-        </table>
-    </div>
+    <table class="table">
+        <tbody>
+        {{#each releases}}
+          {{> releaseItem}}
+        {{/each}}
+        </tbody>
+    </table>
 </template>

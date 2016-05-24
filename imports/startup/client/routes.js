@@ -10,9 +10,15 @@ import '../../ui/pages/project-dashboard.js';
 import '../../ui/pages/product-backlog.js'
 import '../../ui/pages/release-backlog.js';
 import '../../ui/pages/sprint-backlog.js';
-import '../../ui/components/issue-item-view.js';
+import '../../ui/pages/browse-issue.js';
 import '../../ui/components/release-versions.js';
 import '../../ui/components/release-item-view.js';
+
+Router.configure({
+  waitOn: function () {
+    return [Meteor.subscribe('projects'), Meteor.subscribe('issues'), Meteor.subscribe('releases')];
+  }
+});
 
 Router.route('/', {
   name: 'root',
@@ -80,7 +86,7 @@ Router.route('projects/:project_id/releases/:release_id', {
 
 Router.route('/projects/:project_id/issues/:issue_id', {
   name: 'issue',
-  template: 'issueItemView',
+  template: 'browseIssue',
   layoutTemplate: 'appBody',
   data: function() {
     return Issues.findOne({_id: this.params.issue_id});

@@ -1,13 +1,18 @@
 <template name="issuesList">
-    <div class="issuesList">
-        <h3>Issues in {{projectName}}</h3>
-        <form class="newIssue">
-            <input type="text" name="description" placeholder="Type the user story here">
-        </form>
-        <table>
-          {{#each issues}}
-            {{> issueItem}}
-          {{/each}}
-        </table>
+    <div class="panel panel-default">
+        <div class="panel-heading">Issues in {{projectName}}</div>
+        {{#if noIssues}}
+            <div class="panel-body">
+                <p>There are currently no issues. Maybe you can create one?</p>
+            </div>
+        {{else}}
+            <table class="table">
+                <tbody>
+                  {{#each issues}}
+                    {{> issueItem}}
+                  {{/each}}
+                </tbody>
+            </table>
+        {{/if}}
     </div>
 </template>

@@ -1,26 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
 
 import { Issues } from '../../api/issues.js';
 
 import '../items/issue-item.js';
 import './issues-list.html';
 
-Template.issuesList.helpers({
-  issues() {
-    return Issues.find({projectId: Template.instance().data._id});
-  }
+Template.issuesList.onCreated(function () {
+  this.projectId = Router.current().params.project_id;
 });
 
-Template.issuesList.events({
-  'submit .newIssue'(event) {
-    event.preventDefault();
-
-    const target = event.target;
-    const description = target.description.value;
-
-    Meteor.call('issues.insert', description, Template.instance().data._id);
-
-    target.description.value = "";
+Template.issuesList.helpers({
+  issues() {
+    return Issues.find({projectId: Template.instance().projectId});
+  },
+  noIssues() {
+    return Issues.find({projectId: Template.instance().projectId}).count() == 0;
   }
 });

@@ -1,2 +1,2 @@
-import '../components/releases-list';
+import '../components/releases-list.js';
 import './release-backlog.html';
