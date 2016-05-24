@@ -8,9 +8,9 @@ import '../../ui/layouts/app-body.js';
 import '../../ui/pages/user-dashboard.js';
 import '../../ui/pages/project-dashboard.js';
 import '../../ui/pages/product-backlog.js'
-import '../../ui/components/issue-item-view.js';
 import '../../ui/pages/release-backlog.js';
 import '../../ui/pages/sprint-backlog.js';
+import '../../ui/components/issue-item-view.js';
 
 Router.route('/', {
   name: 'root',
