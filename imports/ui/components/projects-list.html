@@ -1,0 +1,13 @@
+<template name="projectsList">
+    <div class="projectsList">
+        <h3>Projects</h3>
+        <form class="newProject">
+            <input type="text" name="projectName" placeholder="Type project name here">
+        </form>
+        <ul>
+          {{#each projects}}
+            {{> projectItem}}
+          {{/each}}
+        </ul>
+    </div>
+</template>
