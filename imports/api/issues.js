@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Projects } from './projects.js';
+
 export const Issues = new Mongo.Collection('issues');
 
 if (Meteor.isServer) {
@@ -15,9 +17,14 @@ Meteor.methods({
     check(summary, String);
     check(projectId, String);
 
+    const projectName = Projects.findOne({_id: projectId}).projectName;
+    const issueCount = Issues.find().count() + 1;
+    const key = projectName.substring(0, 5).toUpperCase() + "-" + issueCount;
+
     Issues.insert({
       summary,
       projectId,
+      key,
       releaseId: 'None',
       estimate: 'Unestimated',
       sprintId: 'None',
