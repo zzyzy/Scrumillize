@@ -1,7 +1,3 @@
 <template name="issueItem">
-    <li>
-      <a href="{{pathFor route='issue' project_id=projectId issue_id=_id}}">
-        {{description}}
-      </a>
-    </li>
+    <tr><td><a href="{{pathFor route='issue' project_id=projectId issue_id=_id}}">{{description}}</a></td></tr>
 </template>

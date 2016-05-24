@@ -7,7 +7,7 @@ import './releases-list.html';
 
 Template.releasesList.helpers({
   releases() {
-    return Releases.find({}, {projectId: this._id});
+    return Releases.find({projectId: this._id});
   }
 });
 

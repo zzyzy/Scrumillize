@@ -4,10 +4,10 @@
         <form class="newIssue">
             <input type="text" name="description" placeholder="Type the user story here">
         </form>
-        <ul>
+        <table>
           {{#each issues}}
             {{> issueItem}}
           {{/each}}
-        </ul>
+        </table>
     </div>
 </template>

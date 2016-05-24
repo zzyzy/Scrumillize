@@ -6,5 +6,8 @@ import './release-item.html';
 Template.releaseItem.helpers({
   formatDate(date) {
     return moment(date).format('DD/MMM/YY');
+  },
+  projectId() {
+    return this.projectId;
   }
 });

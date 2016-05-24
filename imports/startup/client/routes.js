@@ -12,6 +12,7 @@ import '../../ui/pages/release-backlog.js';
 import '../../ui/pages/sprint-backlog.js';
 import '../../ui/components/issue-item-view.js';
 import '../../ui/components/release-versions.js';
+import '../../ui/components/release-item-view.js';
 
 Router.route('/', {
   name: 'root',
@@ -62,10 +63,19 @@ Router.route('/projects/:project_id/sprints/', {
   }
 });
 
-Router.route('/projects/:project_id/releases/new', {
+Router.route('/projects/:project_id/releases/manage', {
   name: 'manageReleases',
   template: 'releaseVersions',
   layoutTemplate: 'appBody'
+});
+
+Router.route('projects/:project_id/releases/:release_id', {
+  name: 'release',
+  template: 'releaseItemView',
+  layoutTemplate: 'appBody',
+  data: function() {
+    return Releases.findOne({_id: this.params.release_id});
+  }
 });
 
 Router.route('/projects/:project_id/issues/:issue_id', {

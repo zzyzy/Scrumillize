@@ -20,8 +20,23 @@ Meteor.methods({
     Issues.insert({
       description,
       projectId,
-      createdAt: new Date(),
+      status: 'open',
+      releaseId: '',
+      sprintId: '',
+      createdAt: new Date()
       // createdBy: this.userId
     });
+  },
+  'moveToRelease'(issueId, releaseId) {
+    check(issueId, String);
+    check(releaseId, String);
+
+    Issues.update({_id: issueId}, {$set: {releaseId}});
+  },
+  'moveToSprint'(issueId, sprintId) {
+    check(issueId, String);
+    check(releaseId, String);
+
+    Issues.update({_id: issueId}, {$set: {sprintId}});
   }
 });
