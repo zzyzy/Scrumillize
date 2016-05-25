@@ -1,13 +1,9 @@
 <template name="productBacklog">
-    <h1 class="page-header">
-        Backlog
-        <small>11 issues</small>
-        <span><button class="btn btn-primary pull-right" type="submit">Create Sprint</button></span>
-    </h1>
+    <h1 class="page-header">Backlog</h1>
 
-  {{> issuesList this}}
+  {{#each sprintLists}}
+    {{> sprintsList}}
+  {{/each}}
 
-    <form class="newIssue">
-        <input type="text" class="form-control" name="summary" placeholder="Type the user story here">
-    </form>
+  {{> backlogList}}
 </template>

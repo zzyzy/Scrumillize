@@ -15,7 +15,7 @@ Template.issueItem.helpers({
     return string.toLowerCase();
   },
   isEstimated (estimate) {
-    return estimate !== 'Unestimated';
+    return estimate !== 0;
   },
   isInRelease (releaseId) {
     return releaseId !== 'None';

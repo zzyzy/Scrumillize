@@ -16,7 +16,12 @@ import '../../ui/components/release-item-view.js';
 
 Router.configure({
   waitOn: function () {
-    return [Meteor.subscribe('projects'), Meteor.subscribe('issues'), Meteor.subscribe('releases')];
+    return [
+      Meteor.subscribe('projects'),
+      Meteor.subscribe('issues'),
+      Meteor.subscribe('releases'),
+      Meteor.subscribe('sprints')
+    ];
   }
 });
 

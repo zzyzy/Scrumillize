@@ -26,8 +26,8 @@ Meteor.methods({
       projectId,
       key,
       releaseId: 'None',
-      estimate: 'Unestimated',
-      sprintId: 'None',
+      estimate: 0,
+      sprintId: null,
       epicId: 'None',
       description: 'None',
       type: 'Story',
@@ -52,5 +52,34 @@ Meteor.methods({
     check(sprintId, String);
 
     Issues.update({_id: issueId}, {$set: {sprintId}});
+  },
+  'createNewIssueInSprint' (summary, projectId, sprintId) {
+    check(summary, String);
+    check(projectId, String);
+    check(sprintId, String);
+
+    const projectName = Projects.findOne({_id: projectId}).projectName;
+    const issueCount = Issues.find().count() + 1;
+    const key = projectName.substring(0, 5).toUpperCase() + "-" + issueCount;
+
+    Issues.insert({
+      summary,
+      projectId,
+      key,
+      releaseId: 'None',
+      estimate: 0,
+      sprintId,
+      epicId: 'None',
+      description: 'None',
+      type: 'Story',
+      priority: 'Medium',
+      affectedVersion: 'None',
+      status: 'Todo',
+      resolution: 'Unresolved',
+      assignee: 'Unassigned',
+      reporter: '', // this.userId
+      createdAt: new Date(),
+      lastModified: new Date()
+    });
   }
 });
