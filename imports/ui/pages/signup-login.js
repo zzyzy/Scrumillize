@@ -60,7 +60,6 @@ Template.signUpLogin.events({
           Router.go('root');
         }
       });
-      console.log(errorReason);
       Template.instance().state.set('error', errorReason);
     }
   },
