@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 
 import { Projects } from '../../api/projects.js';
@@ -11,6 +12,7 @@ import '../../ui/pages/product-backlog.js'
 import '../../ui/pages/release-backlog.js';
 import '../../ui/pages/sprint-backlog.js';
 import '../../ui/pages/browse-issue.js';
+import '../../ui/pages/signup-login.js';
 import '../../ui/components/release-versions.js';
 import '../../ui/components/release-item-view.js';
 
@@ -28,8 +30,24 @@ Router.configure({
 Router.route('/', {
   name: 'root',
   action: function () {
-    Router.go('/projects/');
+      Router.go('/projects/');
+  },
+  onBeforeAction: function() {
+    if (Meteor.user())
+      this.next();
+    else
+      Router.go('/signin/');
   }
+});
+
+Router.route('/signin/', {
+  name: 'signin',
+  template: 'signUpLogin'
+});
+
+Router.route('/register/', {
+  name: 'register',
+  template: 'signUpLogin',
 });
 
 Router.route('/projects/', {
