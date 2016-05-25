@@ -1,7 +1,8 @@
 <template name="sprintStartForm">
     <button type="button" class="btn btn-primary openStartSprintForm pull-right" data-toggle="modal"
             data-target="#openStartSprintForm"
-            disabled={{#if noIssues}}"disabled"{{/if}}>Start Sprint</button>
+            disabled={{#if hasActiveSprintOrNoIssues}}"disabled"{{/if}}>Start Sprint
+    </button>
     <div class="modal fade" id="openStartSprintForm" role="dialog">
         <div class="modal-dialog">
 
@@ -12,20 +13,45 @@
                     <h4 class="modal-title">Start Sprint</h4>
                 </div>
                 <div class="modal-body">
-                    <!--<div class="list-group">-->
-                      <!--{{#each release in releases}}-->
-                        <!--{{#with release}}-->
-                          <!--{{#if isChosenRelease release._id}}-->
-                              <!--<a href="#" class="list-group-item active chooseRelease">{{release.releaseName}}</a>-->
-                          <!--{{else}}-->
-                              <!--<a href="#" class="list-group-item chooseRelease">{{release.releaseName}}</a>-->
-                          <!--{{/if}}-->
-                        <!--{{/with}}-->
-                      <!--{{/each}}-->
-                    <!--</div>-->
+                    <p><strong>{{issueCount}}</strong> issue{{#unless isTheOnlySprint}}s{{/unless}} will be included in
+                        this sprint.</p>
+                    <form class="form-horizontal startSprint">
+                        <div class="form-group">
+                            <label for="sprintName" class="col-sm-3 control-label">Sprint Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="sprintName" name="sprintName"
+                                       value="{{sprintName}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="duration" class="col-sm-3 control-label">Duration</label>
+                            <div class="col-sm-9">
+                                <select name="duration" class="form-control" id="duration">
+                                    <option value="1">1 week</option>
+                                    <option value="2">2 weeks</option>
+                                    <option value="3">3 weeks</option>
+                                    <option value="4">4 weeks</option>
+                                    <option value="c">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate" class="col-sm-3 control-label">Start Date</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="startDate" name="startDate"
+                                       value="{{todayDate}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="col-sm-3 control-label">End Date</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default confirmRelease" data-dismiss="modal">Start</button>
+                    <button type="button" class="btn btn-default startSprintButton" data-dismiss="modal">Start</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

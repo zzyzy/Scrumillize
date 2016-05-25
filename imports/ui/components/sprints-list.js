@@ -34,13 +34,37 @@ Template.sprintsList.helpers({
     return Issues.find({ sprintId: Template.instance().data._id }).count() != 1;
   },
   isTopSprint() {
-    return Template.instance().data.position == Sprints.findOne({}, {sort: {position: 1}}).position;
+    return Template.instance().data.position == Sprints.findOne({status: null}, {sort: {position: 1}}).position;
   },
   isLastSprint() {
-    return Template.instance().data.position == Sprints.findOne({}, {sort: {position: -1}}).position;
+    return Template.instance().data.position == Sprints.findOne({status: null}, {sort: {position: -1}}).position;
   },
   isTheOnlySprint() {
     return Sprints.find().count() === 1;
+  },
+  isActive() {
+    return Template.instance().data.status === true;
+  },
+  todoCount() {
+    if (Issues.find({sprintId: Template.instance().data._id, status: 'todo'}).count() === 0) return 0;
+    return Issues.find({sprintId: Template.instance().data._id, status: 'todo'})
+      .fetch()
+      .map(issue => issue.estimate)
+      .reduce((a, b) => a + b);
+  },
+  inProgressCount() {
+    if (Issues.find({ sprintId: Template.instance().data._id, status: 'inprogress' }).count() === 0) return 0;
+    return Issues.find({sprintId: Template.instance().data._id, status: 'inprogress'})
+      .fetch()
+      .map(issue => issue.estimate)
+      .reduce((a, b) => a + b);
+  },
+  doneCount() {
+    if (Issues.find({ sprintId: Template.instance().data._id, status: 'done' }).count() === 0) return 0;
+    return Issues.find({sprintId: Template.instance().data._id, status: 'done'})
+      .fetch()
+      .map(issue => issue.estimate)
+      .reduce((a, b) => a + b);
   }
 });
 
@@ -61,11 +85,11 @@ Template.sprintsList.events({
   'click .moveSprintUp' (event) {
     event.preventDefault();
 
-    Meteor.call('moveSprint', Template.instance().data._id, 'up');
+    Meteor.call('moveSprintUp', Template.instance().data._id);
   },
   'click .moveSprintDown' (event) {
     event.preventDefault();
 
-    Meteor.call('moveSprint', Template.instance().data._id, 'down');
+    Meteor.call('moveSprintDown', Template.instance().data._id);
   }
 });

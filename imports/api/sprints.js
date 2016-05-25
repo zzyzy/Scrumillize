@@ -46,7 +46,13 @@ Meteor.methods({
     check(startDate, Date);
     check(endDate, Date);
 
-    Sprints.update({_id: sprintId}, {$set: {sprintName,duration, startDate, endDate, status: 'started'}});
+    Sprints.update({_id: sprintId}, {$set: {
+      sprintName,
+      duration,
+      startDate,
+      endDate,
+      status: true
+    }});
   },
   'deleteSprint' (sprintId) {
     check(sprintId, String);
@@ -54,14 +60,29 @@ Meteor.methods({
     Issues.update({sprintId: sprintId}, {$set: {sprintId: null}});
     Sprints.remove({_id: sprintId});
   },
-  'moveSprint' (sprintId, upDown) {
+  'moveSprintUp' (sprintId) {
     check(sprintId, String);
-    check(upDown, String);
 
-    const sortOrder = upDown === 'up' ? -1 : 1;
     const me = Sprints.findOne({_id: sprintId});
     const myPosition = me.position;
-    const target = Sprints.findOne({position: {$lt: myPosition}}, {sort: {position: sortOrder}});
+    const target = Sprints.findOne({position: {$lt: myPosition}, status: null}, {sort: {position: -1}});
+    const myNewPosition = target.position;
+    const targetNewPosition = myPosition;
+
+    // Update my position to before my position
+    Sprints.update({_id: me._id}, {$set: {
+      position: myNewPosition
+    }});
+    Sprints.update({_id: target._id}, {$set: {
+      position: targetNewPosition
+    }});
+  },
+  'moveSprintDown' (sprintId) {
+    check(sprintId, String);
+    
+    const me = Sprints.findOne({_id: sprintId});
+    const myPosition = me.position;
+    const target = Sprints.findOne({position: {$gt: myPosition}, status: null}, {sort: {position: 1}});
     const myNewPosition = target.position;
     const targetNewPosition = myPosition;
 
