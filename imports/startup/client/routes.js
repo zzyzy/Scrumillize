@@ -19,10 +19,7 @@ import '../../ui/components/release-item-view.js';
 Router.configure({
   waitOn: function () {
     return [
-      Meteor.subscribe('projects'),
-      Meteor.subscribe('issues'),
-      Meteor.subscribe('releases'),
-      Meteor.subscribe('sprints')
+      Meteor.subscribe('everything')
     ];
   }
 });
@@ -83,7 +80,7 @@ Router.route('/projects/:project_id/releases/', {
   }
 });
 
-Router.route('/projects/:project_id/sprints/', {
+Router.route('/projects/:project_id/sprint/', {
   name: 'sprintBacklog',
   template: 'sprintBacklog',
   layoutTemplate: 'appBody',

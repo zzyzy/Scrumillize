@@ -6,16 +6,6 @@ import { Projects } from './projects.js';
 
 export const Issues = new Mongo.Collection('issues');
 
-if (Meteor.isServer) {
-  Meteor.publish('issues', function () {
-    let projects = [];
-    Projects.find({users: this.userId}).forEach(function (project) {
-      projects.push(project._id);
-    });
-    return Issues.find({projectId: {$in: projects}});
-  });
-}
-
 Meteor.methods({
   'createNewIssue'(summary, projectId) {
     check(summary, String);

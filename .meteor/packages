@@ -21,3 +21,4 @@ iron:router
 momentjs:moment
 twbs:bootstrap
 accounts-password
+reywood:publish-composite

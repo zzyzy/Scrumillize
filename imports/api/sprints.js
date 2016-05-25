@@ -2,20 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
-import { Projects } from './projects.js';
 import { Issues } from './issues.js';
 
 export const Sprints = new Mongo.Collection('sprints');
-
-if (Meteor.isServer) {
-  Meteor.publish('sprints', function () {
-    let projects = [];
-    Projects.find({users: this.userId}).forEach(function (project) {
-      projects.push(project._id);
-    });
-    return Sprints.find({projectId: {$in: projects}});
-  });
-}
 
 Meteor.methods({
   'createSprint'(projectId) {
