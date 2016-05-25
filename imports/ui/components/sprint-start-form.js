@@ -1,10 +1,15 @@
 import { Template } from 'meteor/templating';
 import { moment } from 'meteor/momentjs:moment';
+import { Router } from 'meteor/iron:router';
 
 import { Sprints } from '../../api/sprints.js';
 import { Issues } from '../../api/issues.js';
 
 import './sprint-start-form.html';
+
+Template.sprintStartForm.onCreated(function () {
+  this.projectId = Router.current().params.project_id;
+});
 
 Template.sprintStartForm.helpers({
   issueCount() {
@@ -31,7 +36,7 @@ Template.sprintStartForm.events({
     const startDate = new Date(document.getElementById('startDate').value);
     const endDate = new Date(document.getElementById('endDate').value);
 
-    Meteor.call('startSprint', Template.instance().data._id, sprintName, duration, startDate, endDate);
+    Meteor.call('startSprint', Template.instance().data._id, Template.instance().projectId, sprintName, duration, startDate, endDate);
 
     document.getElementById('sprintName').value = "";
     document.getElementById('duration').value = "";

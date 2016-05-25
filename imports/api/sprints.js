@@ -28,12 +28,18 @@ Meteor.methods({
       createdBy: Meteor.userId()
     });
   },
-  'startSprint' (sprintId, sprintName, duration, startDate, endDate) {
+  'startSprint' (sprintId, projectId, sprintName, duration, startDate, endDate) {
     check(sprintId, String);
+    check(projectId, String);
     check(sprintName, String);
     check(duration, String);
     check(startDate, Date);
     check(endDate, Date);
+
+    const numberOfActiveSprints = Sprints.find({projectId, status: true}).count();
+    if (numberOfActiveSprints > 1) {
+      throw new Meteor.Error('There is already an active sprint in project ' + projectId);
+    }
 
     Sprints.update({_id: sprintId}, {$set: {
       sprintName,
