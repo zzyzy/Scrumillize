@@ -3,7 +3,9 @@ import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 
 import { Issues } from '../../api/issues.js';
+import { Sprints } from '../../api/sprints.js';
 
+import './sprint-start-form';
 import '../items/issue-item.js';
 import './sprints-list.html';
 
@@ -30,6 +32,15 @@ Template.sprintsList.helpers({
   },
   moreThanOneIssue () {
     return Issues.find({ sprintId: Template.instance().data._id }).count() != 1;
+  },
+  isTopSprint() {
+    return Template.instance().data.position == Sprints.findOne({}, {sort: {position: 1}}).position;
+  },
+  isLastSprint() {
+    return Template.instance().data.position == Sprints.findOne({}, {sort: {position: -1}}).position;
+  },
+  isTheOnlySprint() {
+    return Sprints.find().count() === 1;
   }
 });
 
@@ -46,5 +57,15 @@ Template.sprintsList.events({
   },
   'click .deleteSprint' () {
     Meteor.call('deleteSprint', Template.instance().data._id);
+  },
+  'click .moveSprintUp' (event) {
+    event.preventDefault();
+
+    Meteor.call('moveSprint', Template.instance().data._id, 'up');
+  },
+  'click .moveSprintDown' (event) {
+    event.preventDefault();
+
+    Meteor.call('moveSprint', Template.instance().data._id, 'down');
   }
 });

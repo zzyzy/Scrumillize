@@ -21,11 +21,16 @@ Meteor.methods({
   'createSprint'(projectId) {
     check(projectId, String);
 
-    const sprintName = "Sample Sprint " + (Sprints.find().count() + 1);
+    const lastSprint = Sprints.findOne({}, {sort: {position: -1}});
+    let lastPosition = 0;
+    if (lastSprint !== null && lastSprint !== undefined) lastPosition = lastSprint.position;
+    const position = lastPosition + 1;
+    const sprintName = "Sample Sprint " + position;
 
     Sprints.insert({
       projectId,
       sprintName,
+      position,
       duration: null,
       startDate: null,
       endDate: null,
@@ -48,5 +53,24 @@ Meteor.methods({
     
     Issues.update({sprintId: sprintId}, {$set: {sprintId: null}});
     Sprints.remove({_id: sprintId});
+  },
+  'moveSprint' (sprintId, upDown) {
+    check(sprintId, String);
+    check(upDown, String);
+
+    const sortOrder = upDown === 'up' ? -1 : 1;
+    const me = Sprints.findOne({_id: sprintId});
+    const myPosition = me.position;
+    const target = Sprints.findOne({position: {$lt: myPosition}}, {sort: {position: sortOrder}});
+    const myNewPosition = target.position;
+    const targetNewPosition = myPosition;
+
+    // Update my position to before my position
+    Sprints.update({_id: me._id}, {$set: {
+      position: myNewPosition
+    }});
+    Sprints.update({_id: target._id}, {$set: {
+      position: targetNewPosition
+    }});
   }
 });

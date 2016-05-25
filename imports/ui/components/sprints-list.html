@@ -5,18 +5,27 @@
               {{sprintName}}
                 <small>{{issueCount}} issue{{#if moreThanOneIssue}}s{{/if}}</small>
             </h1>
-            <div class="dropdown pull-right">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <div class="dropdown pull-right" style="margin-left: 10px">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
                     <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <!--<li><a href="#">Action</a></li>-->
-                    <!--<li><a href="#">Another action</a></li>-->
-                    <!--<li><a href="#">Something else here</a></li>-->
-                    <!--<li role="separator" class="divider"></li>-->
+                  {{#unless isTopSprint}}
+                      <li><a href="#" class="moveSprintUp">Move sprint up</a></li>
+                  {{/unless}}
+                  {{#unless isLastSprint}}
+                      <li><a href="#" class="moveSprintDown">Move sprint down</a></li>
+                  {{/unless}}
+                  {{#unless isTheOnlySprint}}
+                      <li role="separator" class="divider"></li>
+                  {{/unless}}
                     <li><a href="#" class="deleteSprint">Delete sprint</a></li>
                 </ul>
             </div>
+          {{#if isTopSprint}}
+            {{> sprintStartForm}}
+          {{/if}}
         </div>
         <table class="table">
             <tbody>
@@ -42,7 +51,8 @@
         <div class="panel-footer clearfix">
             <div class="pull-right" style="display: flex; align-items: center;">
                 <small>{{issueCount}} issue{{#if moreThanOneIssue}}s{{/if}}</small>
-                <small style="margin-left: 30px; margin-right: 4px;">Estimate </small><span class="badge">{{estimate}}</span>
+                <small style="margin-left: 30px; margin-right: 4px;">Estimate</small>
+                <span class="badge">{{estimate}}</span>
             </div>
         </div>
     </div>
