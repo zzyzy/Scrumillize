@@ -10,7 +10,7 @@ Meteor.methods({
   'createSprint'(projectId) {
     check(projectId, String);
 
-    const lastSprint = Sprints.findOne({}, {sort: {position: -1}});
+    const lastSprint = Sprints.findOne({projectId: projectId}, {sort: {position: -1}});
     let lastPosition = 0;
     if (lastSprint !== null && lastSprint !== undefined) lastPosition = lastSprint.position;
     const position = lastPosition + 1;
@@ -49,12 +49,13 @@ Meteor.methods({
     Issues.update({sprintId: sprintId}, {$set: {sprintId: null}});
     Sprints.remove({_id: sprintId});
   },
-  'moveSprintUp' (sprintId) {
+  'moveSprintUp' (sprintId, projectId) {
     check(sprintId, String);
+    check(projectId, String);
 
     const me = Sprints.findOne({_id: sprintId});
     const myPosition = me.position;
-    const target = Sprints.findOne({position: {$lt: myPosition}, status: null}, {sort: {position: -1}});
+    const target = Sprints.findOne({projectId: projectId, position: {$lt: myPosition}, status: null}, {sort: {position: -1}});
     const myNewPosition = target.position;
     const targetNewPosition = myPosition;
 
@@ -66,12 +67,13 @@ Meteor.methods({
       position: targetNewPosition
     }});
   },
-  'moveSprintDown' (sprintId) {
+  'moveSprintDown' (sprintId, projectId) {
     check(sprintId, String);
+    check(projectId, String);
     
     const me = Sprints.findOne({_id: sprintId});
     const myPosition = me.position;
-    const target = Sprints.findOne({position: {$gt: myPosition}, status: null}, {sort: {position: 1}});
+    const target = Sprints.findOne({projectId: projectId, position: {$gt: myPosition}, status: null}, {sort: {position: 1}});
     const myNewPosition = target.position;
     const targetNewPosition = myPosition;
 

@@ -34,13 +34,24 @@ Template.sprintsList.helpers({
     return Issues.find({ sprintId: Template.instance().data._id }).count() != 1;
   },
   isTopSprint() {
-    return Template.instance().data.position == Sprints.findOne({status: null}, {sort: {position: 1}}).position;
+    const instanceData = Template.instance().data;
+    const projectId = instanceData.projectId;
+    const position = instanceData.position;
+    const sprint = Sprints.findOne({projectId: projectId, status: null}, {sort: {position: 1}});
+    const sprintPosition = sprint.position;
+    return position == sprintPosition;
   },
   isLastSprint() {
-    return Template.instance().data.position == Sprints.findOne({status: null}, {sort: {position: -1}}).position;
+    const instanceData = Template.instance().data;
+    const projectId = instanceData.projectId;
+    const position = instanceData.position;
+    const sprint = Sprints.findOne({projectId: projectId, status: null}, {sort: {position: -1}});
+    const sprintPosition = sprint.position;
+    return position == sprintPosition;
   },
   isTheOnlySprint() {
-    return Sprints.find().count() === 1;
+    const projectId = Template.instance().data.projectId;
+    return Sprints.find({projectId}).count() === 1;
   },
   isActive() {
     return Template.instance().data.status === true;
@@ -85,11 +96,11 @@ Template.sprintsList.events({
   'click .moveSprintUp' (event) {
     event.preventDefault();
 
-    Meteor.call('moveSprintUp', Template.instance().data._id);
+    Meteor.call('moveSprintUp', Template.instance().data._id, Template.instance().data.projectId);
   },
   'click .moveSprintDown' (event) {
     event.preventDefault();
 
-    Meteor.call('moveSprintDown', Template.instance().data._id);
+    Meteor.call('moveSprintDown', Template.instance().data._id, Template.instance().data.projectId);
   }
 });
