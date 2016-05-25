@@ -1,16 +1,18 @@
 <template name="releaseItemView">
     <h2>Release {{releaseName}}</h2>
   {{#if noIssues}}
-    <h3>No issues in progress right now</h3>
-    <p>
-        As issues move through your workflow they'll appear in the appropriate tabs on this page. Seems it's all
-        quiet now.
-    </p>
+      <h3>No issues in progress right now</h3>
+      <p>
+          As issues move through your workflow they'll appear in the appropriate tabs on this page. Seems it's all
+          quiet now.
+      </p>
   {{else}}
-    <table class="table table-responsive">
-        {{#each issues}}
-          {{> issueItem}}
-        {{/each}}
-    </table>
+      <table class="table table-responsive">
+          <tbody>
+          {{#each issues}}
+            {{> issueItem}}
+          {{/each}}
+          </tbody>
+      </table>
   {{/if}}
 </template>
