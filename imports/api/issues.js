@@ -12,13 +12,17 @@ Meteor.methods({
     check(projectId, String);
 
     const projectName = Projects.findOne({_id: projectId}).projectName;
-    const issueCount = Issues.find().count() + 1;
-    const key = projectName.substring(0, 5).toUpperCase() + "-" + issueCount;
+    const lastIssue = Issues.findOne({projectId: projectId}, {sort: {position: -1}});
+    let lastPosition = 0;
+    if (lastIssue !== null && lastIssue !== undefined) lastPosition = lastIssue.position;
+    const position = lastPosition + 1;
+    const key = projectName.substring(0, 5).toUpperCase() + "-" + position;
 
     Issues.insert({
       summary,
       projectId,
       key,
+      position,
       releaseId: null,
       estimate: 0,
       sprintId: null,
@@ -53,13 +57,17 @@ Meteor.methods({
     check(sprintId, String);
 
     const projectName = Projects.findOne({_id: projectId}).projectName;
-    const issueCount = Issues.find().count() + 1;
-    const key = projectName.substring(0, 5).toUpperCase() + "-" + issueCount;
+    const lastIssue = Issues.findOne({projectId: projectId}, {sort: {position: -1}});
+    let lastPosition = 0;
+    if (lastIssue !== null && lastIssue !== undefined) lastPosition = lastIssue.position;
+    const position = lastPosition + 1;
+    const key = projectName.substring(0, 5).toUpperCase() + "-" + position;
 
     Issues.insert({
       summary,
       projectId,
       key,
+      position,
       releaseId: null,
       estimate: 0,
       sprintId,
