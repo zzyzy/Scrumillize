@@ -2,13 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Projects } from './projects.js';
 import { Issues } from './issues.js';
 
 export const Sprints = new Mongo.Collection('sprints');
 
 if (Meteor.isServer) {
   Meteor.publish('sprints', function () {
-    return Sprints.find();
+    let projects = [];
+    Projects.find({users: this.userId}).forEach(function (project) {
+      projects.push(project._id);
+    });
+    return Sprints.find({projectId: {$in: projects}});
   });
 }
 
@@ -25,7 +30,8 @@ Meteor.methods({
       startDate: null,
       endDate: null,
       status: null,
-      createdAt: new Date()
+      createdAt: new Date(),
+      createdBy: Meteor.userId()
     });
   },
   'startSprint' (sprintId, sprintName, duration, startDate, endDate) {

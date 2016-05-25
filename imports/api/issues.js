@@ -8,7 +8,11 @@ export const Issues = new Mongo.Collection('issues');
 
 if (Meteor.isServer) {
   Meteor.publish('issues', function () {
-    return Issues.find();
+    let projects = [];
+    Projects.find({users: this.userId}).forEach(function (project) {
+      projects.push(project._id);
+    });
+    return Issues.find({projectId: {$in: projects}});
   });
 }
 
@@ -36,7 +40,7 @@ Meteor.methods({
       status: 'todo',
       resolution: null,
       assignee: null,
-      reporter: '', // this.userId
+      reporter: Meteor.userId(),
       createdAt: new Date(),
       lastModified: new Date()
     });
@@ -77,7 +81,7 @@ Meteor.methods({
       status: 'todo',
       resolution: null,
       assignee: null,
-      reporter: '', // this.userId
+      reporter: Meteor.userId(), // this.userId
       createdAt: new Date(),
       lastModified: new Date()
     });

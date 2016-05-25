@@ -6,7 +6,7 @@ export const Projects = new Mongo.Collection('projects');
 
 if (Meteor.isServer) {
   Meteor.publish('projects', function () {
-    return Projects.find({});
+    return Projects.find({users: this.userId});
   });
 }
 
@@ -18,8 +18,9 @@ Meteor.methods({
 
     Projects.insert({
       projectName,
-      createdAt: new Date()
-      // createdBy
+      createdAt: new Date(),
+      createdBy: Meteor.userId(),
+      users: [Meteor.userId()]
     });
   }
 });
