@@ -18,7 +18,7 @@ Template.issueItem.helpers({
     return estimate !== 0;
   },
   isInRelease (releaseId) {
-    return releaseId !== 'None';
+    return releaseId !== null;
   },
   releaseName (releaseId) {
     return Releases.findOne({ _id: releaseId }).releaseName;
