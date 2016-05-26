@@ -1,4 +1,5 @@
 <template name="browseIssue">
+      <a href="{{pathFor route='issue' project_id=projectId issue_id=_id}}"><small>{{key}}</small></a>
       <h2 class="sub-header">{{summary}}</h2>
 
       {{> issueItemView this}}
