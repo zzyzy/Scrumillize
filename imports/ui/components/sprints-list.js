@@ -38,6 +38,7 @@ Template.sprintsList.helpers({
     const projectId = instanceData.projectId;
     const position = instanceData.position;
     const sprint = Sprints.findOne({projectId: projectId, status: null}, {sort: {position: 1}});
+    if (sprint === null || sprint === undefined) return false;
     const sprintPosition = sprint.position;
     return position == sprintPosition;
   },
@@ -46,6 +47,7 @@ Template.sprintsList.helpers({
     const projectId = instanceData.projectId;
     const position = instanceData.position;
     const sprint = Sprints.findOne({projectId: projectId, status: null}, {sort: {position: -1}});
+    if (sprint === null || sprint === undefined) return false;
     const sprintPosition = sprint.position;
     return position == sprintPosition;
   },
@@ -76,6 +78,9 @@ Template.sprintsList.helpers({
       .fetch()
       .map(issue => issue.estimate)
       .reduce((a, b) => a + b);
+  },
+  hasActiveSprintOrNoIssues() {
+    return Sprints.find({status: true}).count() != 0 || Issues.find({ sprintId: Template.instance().data._id }).count() == 0;
   }
 });
 

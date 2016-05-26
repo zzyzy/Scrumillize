@@ -20,9 +20,6 @@ Template.sprintStartForm.helpers({
   },
   todayDate() {
     return moment().format('YYYY-MM-DD');
-  },
-  hasActiveSprintOrNoIssues() {
-    return Sprints.find({status: true}).count() != 0 || Issues.find({ sprintId: Template.instance().data._id }).count() == 0;
   }
 });
 

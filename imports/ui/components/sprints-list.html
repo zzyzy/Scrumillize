@@ -33,7 +33,10 @@
               </div>
           {{/unless}}
           {{#if isTopSprint}}
-            {{> sprintStartForm}}
+              <button type="button" class="btn btn-primary openStartSprintForm pull-right" data-toggle="modal"
+                      data-target="#openStartSprintForm"
+                      disabled={{#if hasActiveSprintOrNoIssues}}"disabled"{{/if}}>Start Sprint
+              </button>
           {{/if}}
         </div>
         <table class="table table-responsive">
@@ -68,5 +71,6 @@
               </div>
           </div>
       {{/unless}}
+      {{> sprintStartForm}}
     </div>
 </template>
