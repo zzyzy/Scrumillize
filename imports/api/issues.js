@@ -46,7 +46,7 @@ Meteor.methods({
       priority: 'medium',
       affectedVersion: null,
       status: 'todo',
-      resolution: null,
+      resolution: false,
       assignee: null,
       reporter: Meteor.userId(),
       createdAt: new Date(),
@@ -92,7 +92,7 @@ Meteor.methods({
       priority: 'medium',
       affectedVersion: null,
       status: 'todo',
-      resolution: null,
+      resolution: false,
       assignee: null,
       reporter: Meteor.userId(), // this.userId
       createdAt: new Date(),
@@ -103,16 +103,31 @@ Meteor.methods({
   'setTodo' (sprintId) {
     check(sprintId, String);
 
-    Issues.update({_id: sprintId}, {$set: {status: 'todo'}});
+    Issues.update({_id: sprintId}, {$set: {
+      status: 'todo',
+      resolution: false,
+      lastModified: new Date(),
+      finishedAt: null,
+    }});
   },
   'setInProgress' (sprintId) {
     check(sprintId, String);
 
-    Issues.update({_id: sprintId}, {$set: {status: 'inprogress'}});
+    Issues.update({_id: sprintId}, {$set: {
+      status: 'inprogress',
+      resolution: false,
+      lastModified: new Date(),
+      finishedAt: null,
+    }});
   },
   'setDone' (sprintId) {
     check(sprintId, String);
 
-    Issues.update({_id: sprintId}, {$set: {status: 'done'}});
+    Issues.update({_id: sprintId}, {$set: {
+      status: 'done',
+      resolution: true,
+      lastModified: new Date(),
+      finishedAt: new Date(),
+    }});
   },
 });

@@ -39,7 +39,8 @@ Meteor.methods({
       endDate: null,
       status: null,
       createdAt: new Date(),
-      createdBy: Meteor.userId()
+      createdBy: Meteor.userId(),
+      closedAt: null,
     });
   },
   'startSprint' (sprintId, projectId, sprintName, duration, startDate, endDate) {
@@ -105,4 +106,10 @@ Meteor.methods({
       position: targetNewPosition
     }});
   },
+  'completeSprint' (sprintId) {
+    check(sprintId, String);
+
+    Sprints.update({_id: sprintId}, {$set: {status: false, closedAt: new Date()}});
+    Issues.update({sprintId: sprintId, status: {$ne: 'done'}}, {$set: {sprintId: null}});
+  }
 });

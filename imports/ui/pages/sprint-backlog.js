@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
+import { moment } from 'meteor/momentjs:moment';
 
 import { Sprints } from '../../api/sprints.js';
 import { Issues } from '../../api/issues.js';
@@ -42,6 +43,18 @@ Template.sprintBacklog.helpers({
   },
   projectId () {
     return Template.instance().state.get('projectId');
+  },
+  daysRemaining() {
+    const sprintId = Template.instance().state.get('sprintId');
+    const today = moment();
+    const endDate = moment(Sprints.findOne({_id: sprintId}).endDate);
+    return endDate.diff(today, 'days');
+  },
+  moreThanOneDay() {
+    const sprintId = Template.instance().state.get('sprintId');
+    const today = moment();
+    const endDate = moment(Sprints.findOne({_id: sprintId}).endDate);
+    return endDate.diff(today, 'days') > 1;
   }
 });
 
@@ -54,5 +67,8 @@ Template.sprintBacklog.events({
   },
   'click .setDone' () {
     Meteor.call('setDone', this._id);
+  },
+  'click .completeSprint' () {
+    Meteor.call('completeSprint', Template.instance().state.get('sprintId'));
   }
 });

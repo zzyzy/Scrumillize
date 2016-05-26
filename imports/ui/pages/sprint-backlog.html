@@ -1,194 +1,203 @@
 <template name="sprintBacklog">
-  {{#if hasActiveSprint}}
-      <h1 class="page-header">{{activeSprintName}}</h1>
-      <div class="row">
-          <div class="col-md-4">
-              <table class="table table-responsive table-bordered">
-                  <thead>
-                  <tr>
-                      <th>To Do</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {{#each issue in todoIssues}}
-                    {{#with issue}}
-                        <tr>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/{{issue.type}}.svg" width="16" height="16">
-                                        <img src="/{{issue.priority}}.svg" width="16" height="16">
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div class="row clearfix">
-                                            <div class="col-md-6 pull-left">
-                                                <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="dropdown pull-right">
-                                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button"
-                                                            id="dropdownMenu1"
-                                                            data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="true">
+{{#if hasActiveSprint}}
+    <div class="page-header" style="display: flex; align-items: center; ">
+        <h1 style="flex: 10 0 0">{{activeSprintName}}</h1>
+    <div style="flex: 2 0 0; text-align: right; margin-right: 20px; margin-top: 10px">{{daysRemaining}}
+        day{{#if moreThanOneDay}}s{{/if}} remaining</div>
+        <button type="button" class="btn btn-success completeSprint" style="flex: 1 0 0; margin-top: 10px">Complete Sprint</button>
+    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                    <tr>
+                        <th>To Do</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each issue in todoIssues}}
+                      {{#with issue}}
+                          <tr>
+                              <td>
+                                  <div class="row">
+                                      <div class="col-md-1">
+                                          <img src="/{{issue.type}}.svg" width="16" height="16">
+                                          <img src="/{{issue.priority}}.svg" width="16" height="16">
+                                      </div>
+                                      <div class="col-md-11">
+                                          <div class="row clearfix">
+                                              <div class="col-md-6 pull-left">
+                                                  <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
+                                              </div>
+                                              <div class="col-md-6 pull-right">
+                                                  <div class="dropdown pull-right">
+                                                      <button class="btn btn-default btn-xs dropdown-toggle"
+                                                              type="button"
+                                                              id="dropdownMenu1"
+                                                              data-toggle="dropdown"
+                                                              aria-haspopup="true" aria-expanded="true">
                                               <span class="glyphicon glyphicon-menu-hamburger"
                                                     aria-hidden="true"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="#" class="setInProgress">Set In Progress</a></li>
-                                                        <li><a href="#" class="setDone">Set Done</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a href="#" class="deleteIssue">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                      </button>
+                                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                          <li><a href="#" class="setInProgress">Set In Progress</a></li>
+                                                          <li><a href="#" class="setDone">Set Done</a></li>
+                                                          <li role="separator" class="divider"></li>
+                                                          <li><a href="#" class="deleteIssue">Delete</a></li>
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                          </div>
 
-                                        <div class="row" style="height: 60px; overflow: hidden">
-                                            <div class="col-md-12">
-                                              {{issue.summary}}
-                                            </div>
-                                        </div>
+                                          <div class="row" style="height: 60px; overflow: hidden">
+                                              <div class="col-md-12">
+                                                {{issue.summary}}
+                                              </div>
+                                          </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12 clearfix">
-                                                <span class="badge pull-right">{{issue.estimate}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {{/with}}
-                  {{/each}}
-                  </tbody>
-              </table>
-          </div>
-          <div class="col-md-4">
-              <table class="table table-responsive table-bordered">
-                  <thead>
-                  <tr>
-                      <th>In Progress</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {{#each issue in inProgressIssues}}
-                    {{#with issue}}
-                        <tr>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/{{issue.type}}.svg" width="16" height="16">
-                                        <img src="/{{issue.priority}}.svg" width="16" height="16">
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div class="row clearfix">
-                                            <div class="col-md-6 pull-left">
-                                                <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="dropdown pull-right">
-                                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button"
-                                                            id="dropdownMenu1"
-                                                            data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="true">
+                                          <div class="row">
+                                              <div class="col-md-12 clearfix">
+                                                  <span class="badge pull-right">{{issue.estimate}}</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
+                          </tr>
+                      {{/with}}
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                    <tr>
+                        <th>In Progress</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each issue in inProgressIssues}}
+                      {{#with issue}}
+                          <tr>
+                              <td>
+                                  <div class="row">
+                                      <div class="col-md-1">
+                                          <img src="/{{issue.type}}.svg" width="16" height="16">
+                                          <img src="/{{issue.priority}}.svg" width="16" height="16">
+                                      </div>
+                                      <div class="col-md-11">
+                                          <div class="row clearfix">
+                                              <div class="col-md-6 pull-left">
+                                                  <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
+                                              </div>
+                                              <div class="col-md-6 pull-right">
+                                                  <div class="dropdown pull-right">
+                                                      <button class="btn btn-default btn-xs dropdown-toggle"
+                                                              type="button"
+                                                              id="dropdownMenu1"
+                                                              data-toggle="dropdown"
+                                                              aria-haspopup="true" aria-expanded="true">
                                               <span class="glyphicon glyphicon-menu-hamburger"
                                                     aria-hidden="true"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="#" class="setDone">Set Done</a></li>
-                                                        <li><a href="#" class="setTodo">Set Todo</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a href="#" class="deleteIssue">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                      </button>
+                                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                          <li><a href="#" class="setDone">Set Done</a></li>
+                                                          <li><a href="#" class="setTodo">Set Todo</a></li>
+                                                          <li role="separator" class="divider"></li>
+                                                          <li><a href="#" class="deleteIssue">Delete</a></li>
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                          </div>
 
-                                        <div class="row" style="height: 60px; overflow: hidden">
-                                            <div class="col-md-12">
-                                              {{issue.summary}}
-                                            </div>
-                                        </div>
+                                          <div class="row" style="height: 60px; overflow: hidden">
+                                              <div class="col-md-12">
+                                                {{issue.summary}}
+                                              </div>
+                                          </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12 clearfix">
-                                                <span class="badge pull-right">{{issue.estimate}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {{/with}}
-                  {{/each}}
-                  </tbody>
-              </table>
-          </div>
-          <div class="col-md-4">
-              <table class="table table-responsive table-bordered">
-                  <thead>
-                  <tr>
-                      <th>Done</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {{#each issue in doneIssues}}
-                    {{#with issue}}
-                        <tr>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/{{issue.type}}.svg" width="16" height="16">
-                                        <img src="/{{issue.priority}}.svg" width="16" height="16">
-                                    </div>
-                                    <div class="col-md-11">
-                                        <div class="row clearfix">
-                                            <div class="col-md-6 pull-left">
-                                                <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
-                                            </div>
-                                            <div class="col-md-6 pull-right">
-                                                <div class="dropdown pull-right">
-                                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button"
-                                                            id="dropdownMenu1"
-                                                            data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="true">
+                                          <div class="row">
+                                              <div class="col-md-12 clearfix">
+                                                  <span class="badge pull-right">{{issue.estimate}}</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
+                          </tr>
+                      {{/with}}
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Done</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each issue in doneIssues}}
+                      {{#with issue}}
+                          <tr>
+                              <td>
+                                  <div class="row">
+                                      <div class="col-md-1">
+                                          <img src="/{{issue.type}}.svg" width="16" height="16">
+                                          <img src="/{{issue.priority}}.svg" width="16" height="16">
+                                      </div>
+                                      <div class="col-md-11">
+                                          <div class="row clearfix">
+                                              <div class="col-md-6 pull-left">
+                                                  <a href="{{pathFor route='issue' project_id=projectId issue_id=issue._id}}">{{issue.key}}</a>
+                                              </div>
+                                              <div class="col-md-6 pull-right">
+                                                  <div class="dropdown pull-right">
+                                                      <button class="btn btn-default btn-xs dropdown-toggle"
+                                                              type="button"
+                                                              id="dropdownMenu1"
+                                                              data-toggle="dropdown"
+                                                              aria-haspopup="true" aria-expanded="true">
                                               <span class="glyphicon glyphicon-menu-hamburger"
                                                     aria-hidden="true"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a href="#" class="setInProgress">Set In Progress</a></li>
-                                                        <li><a href="#" class="setTodo">Set Todo</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a href="#" class="deleteIssue">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                      </button>
+                                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                          <li><a href="#" class="setInProgress">Set In Progress</a></li>
+                                                          <li><a href="#" class="setTodo">Set Todo</a></li>
+                                                          <li role="separator" class="divider"></li>
+                                                          <li><a href="#" class="deleteIssue">Delete</a></li>
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                          </div>
 
-                                        <div class="row" style="height: 60px; overflow: hidden">
-                                            <div class="col-md-12">
-                                              {{issue.summary}}
-                                            </div>
-                                        </div>
+                                          <div class="row" style="height: 60px; overflow: hidden">
+                                              <div class="col-md-12">
+                                                {{issue.summary}}
+                                              </div>
+                                          </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12 clearfix">
-                                                <span class="badge pull-right">{{issue.estimate}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {{/with}}
-                  {{/each}}
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  {{else}}
-      <h1 class="page-header">Active sprints</h1>
-      <p>There are no active sprints. Start sprints in the <a href="{{pathFor route='productBacklog' project_id=_id}}">Backlog</a>
-      </p>
-  {{/if}}
-</template>
+                                          <div class="row">
+                                              <div class="col-md-12 clearfix">
+                                                  <span class="badge pull-right">{{issue.estimate}}</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
+                          </tr>
+                      {{/with}}
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {{else}}
+            <h1 class="page-header">Active sprints</h1>
+            <p>There are no active sprints. Start sprints in the <a
+                    href="{{pathFor route='productBacklog' project_id=_id}}">Backlog</a>
+            </p>
+    {{/if}}
+    </template>

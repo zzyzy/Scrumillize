@@ -8,6 +8,6 @@ import './product-backlog.html';
 
 Template.productBacklog.helpers({
   sprintLists () {
-    return Sprints.find({ projectId: Template.instance().data._id }, {sort: {position: 1}});
+    return Sprints.find({ projectId: Template.instance().data._id, status: {$ne: false}}, {sort: {position: 1}});
   }
 });
