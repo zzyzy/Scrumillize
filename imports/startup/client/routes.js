@@ -15,6 +15,7 @@ import '../../ui/pages/browse-issue.js';
 import '../../ui/pages/signup-login.js';
 import '../../ui/pages/reports.js';
 import '../../ui/pages/all-issues';
+import '../../ui/pages/invite-team';
 import '../../ui/components/release-versions.js';
 import '../../ui/components/release-item-view.js';
 
@@ -124,5 +125,11 @@ Router.route('/projects/:project_id/reports', {
 Router.route('/projects/:project_id/issues', {
   name: 'issues',
   template: 'issues',
+  layoutTemplate: 'appBody'
+});
+
+Router.route('/projects/:project_id/invite', {
+  name: 'inviteTeam',
+  template: 'inviteTeam',
   layoutTemplate: 'appBody'
 });

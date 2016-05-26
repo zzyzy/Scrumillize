@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base';
 
 export const Projects = new Mongo.Collection('projects');
 
@@ -30,5 +31,17 @@ Meteor.methods({
       createdBy: Meteor.userId(),
       users: [Meteor.userId()]
     });
+  },
+  'createUserForProject' (projectId, email, password) {
+    check(projectId, String);
+    check(email, String);
+    check(password, String);
+
+    const newUserId = Accounts.createUser({
+      email: email,
+      password: password
+    });
+
+    Projects.update({_id: projectId}, {$push: {users: newUserId}});
   }
 });
