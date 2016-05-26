@@ -1,11 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Sprints } from '../../api/sprints.js';
 import { Releases } from '../../api/releases.js';
 
 import './issue-item-view.html';
+
+Template.issueItemView.onCreated(function () {
+  this.commentMode = new ReactiveVar();
+  this.commentMode.set(false);
+});
 
 Template.issueItemView.helpers({
   releaseName (releaseId) {
@@ -19,7 +25,7 @@ Template.issueItemView.helpers({
   },
   getStatus () {
     const status = Template.instance().data.status;
-    return status.charAt(0).toUpperCase() + status.substring(1);
+    return status.toUpperCase();
   },
   getPriority () {
     const priority = Template.instance().data.priority;
@@ -44,7 +50,7 @@ Template.issueItemView.helpers({
     }
   },
   getReporter () {
-    const reporter = Template.instance().data.assignee;
+    const reporter = Template.instance().data.reporter;
     if (reporter === null || reporter === undefined) return 'None';
     else {
       const user = Meteor.users.findOne({_id: reporter});
@@ -53,6 +59,88 @@ Template.issueItemView.helpers({
   },
   formatDate (date) {
     return moment(date).format('DD/MMM/YY');
+  },
+  ifHasComments () {
+    return Template.instance().data.comments.length > 0;
+  },
+  ifCommentMode () {
+    return Template.instance().commentMode.get() === true;
+  }
+});
+
+Template.issueItemView.events({
+  'click #editIssue' () {
+
+  },
+  'click #commentIssue' () {
+
+  },
+  'click #assignIssue' () {
+
+  },
+  'click #deleteIssue' () {
+    Meteor.call('deleteIssue', Template.instance().data._id);
+  },
+  'click #setTodo' () {
+    Meteor.call('setTodo', Template.instance().data._id);
+  },
+  'click #setInProgress' () {
+    Meteor.call('setInProgress', Template.instance().data._id);
+  },
+  'click #setDone' () {
+    Meteor.call('setDone', Template.instance().data._id);
+  },
+  'click #setToStory' () {
+    Meteor.call('setIssueToStory', Template.instance().data._id);
+  },
+  'click #setToTask' () {
+    Meteor.call('setIssueToTask', Template.instance().data._id);
+  },
+  'click #setToEpic' () {
+    Meteor.call('setIssueToEpic', Template.instance().data._id);
+  },
+  'click #setToBug' () {
+    Meteor.call('setIssueToBug', Template.instance().data._id);
+  },
+  'click #setPriorityHighest' () {
+    Meteor.call('setIssuePriorityHighest', Template.instance().data._id);
+  },
+  'click #setPriorityHigh' () {
+    Meteor.call('setIssuePriorityHigh', Template.instance().data._id);
+  },
+  'click #setPriorityMedium' () {
+    Meteor.call('setIssuePriorityMedium', Template.instance().data._id);
+  },
+  'click #setPriorityLow' () {
+    Meteor.call('setIssuePriorityLow', Template.instance().data._id);
+  },
+  'click #setPriorityLowest' () {
+    Meteor.call('setIssuePriorityLowest', Template.instance().data._id);
+  },
+  'change #storyPoints' (event) {
+    const target = event.target;
+    const estimate = target.value;
+    Meteor.call('setEstimate', Template.instance().data._id, estimate);
+  },
+  'click #gotoCommentMode' (event) {
+    const instance = Template.instance();
+    instance.commentMode.set(true);
+  },
+  'click #addComment' (event) {
+    const instance = Template.instance();
+    const textarea = instance.$('#comment');
+    const comment = textarea.val();
+    Meteor.call('addComment', instance.data._id, comment);
+    instance.commentMode.set(false);
+  },
+  'click #cancelComment'() {
+    Template.instance().commentMode.set(false);
+  },
+  'change #description' (event) {
+    const instance = Template.instance();
+    const target = event.target;
+    const value = event.target.value;
+    Meteor.call('setDescription', instance.data._id, value);
   }
 });
 

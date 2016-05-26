@@ -132,4 +132,73 @@ Meteor.methods({
       finishedAt: new Date(),
     }});
   },
+  'deleteIssue' (issueId) {
+    check(issueId, String);
+    
+    Issues.remove({_id: issueId});
+  },
+  'assignIssue' (issueId, assignee) {
+    check(issueId, String);
+    check(assignee, String);
+    
+    Issues.update({_id: issueId}, {$set: {assignee}});
+  },
+  'setIssueToStory' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {type: 'story'}});
+  },
+  'setIssueToTask' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {type: 'task'}});
+  },
+  'setIssueToEpic' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {type: 'epic'}});
+  },
+  'setIssueToBug' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {type: 'bug'}});
+  },
+  'setIssuePriorityHighest' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {priority: 'highest'}});
+  },
+  'setIssuePriorityHigh' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {priority: 'high'}});
+  },
+  'setIssuePriorityMedium' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {priority: 'medium'}});
+  },
+  'setIssuePriorityLow' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {priority: 'low'}});
+  },
+  'setIssuePriorityLowest' (issueId) {
+    check(issueId, String);
+    Issues.update({_id: issueId}, {$set: {priority: 'lowest'}});
+  },
+  'setEstimate' (issueId, estimate) {
+    check(issueId, String);
+    check(estimate, String);
+    
+    Issues.update({_id: issueId}, {$set: {estimate: parseInt(estimate)}});
+  },
+  'addComment' (issueId, comment) {
+    check(issueId, String);
+    check(comment, String);
+    const commentObj = {
+      content: comment,
+      author: Meteor.users.findOne({_id: Meteor.userId()}).emails[0].address
+    };
+
+    Issues.update({_id: issueId}, {$push: {comments: commentObj}});
+  },
+  'setDescription' (issueId, description) {
+    check(issueId, String);
+    check(description, String);
+    
+    Issues.update({_id: issueId}, {$set: {description: description}});
+  }
 });
