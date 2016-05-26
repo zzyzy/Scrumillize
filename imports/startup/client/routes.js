@@ -14,6 +14,7 @@ import '../../ui/pages/sprint-backlog.js';
 import '../../ui/pages/browse-issue.js';
 import '../../ui/pages/signup-login.js';
 import '../../ui/pages/reports.js';
+import '../../ui/pages/all-issues';
 import '../../ui/components/release-versions.js';
 import '../../ui/components/release-item-view.js';
 
@@ -63,7 +64,7 @@ Router.route('/projects/:project_id', {
   }
 });
 
-Router.route('/projects/:project_id/issues/', {
+Router.route('/projects/:project_id/backlog/', {
   name: 'productBacklog',
   template: 'productBacklog',
   layoutTemplate: 'appBody',
@@ -117,5 +118,11 @@ Router.route('/projects/:project_id/issues/:issue_id', {
 Router.route('/projects/:project_id/reports', {
   name: 'reports',
   template: 'reports',
+  layoutTemplate: 'appBody'
+});
+
+Router.route('/projects/:project_id/issues', {
+  name: 'issues',
+  template: 'issues',
   layoutTemplate: 'appBody'
 });
