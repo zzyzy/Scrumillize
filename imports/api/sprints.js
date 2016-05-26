@@ -34,7 +34,7 @@ Meteor.methods({
       projectId,
       sprintName,
       position,
-      duration: null,
+      // duration: null,
       startDate: null,
       endDate: null,
       status: null,
@@ -43,11 +43,11 @@ Meteor.methods({
       closedAt: null,
     });
   },
-  'startSprint' (sprintId, projectId, sprintName, duration, startDate, endDate) {
+  'startSprint' (sprintId, projectId, sprintName, startDate, endDate) {
     check(sprintId, String);
     check(projectId, String);
     check(sprintName, String);
-    check(duration, String);
+    // check(duration, String);
     check(startDate, Date);
     check(endDate, Date);
 
@@ -58,7 +58,7 @@ Meteor.methods({
 
     Sprints.update({_id: sprintId}, {$set: {
       sprintName,
-      duration,
+      // duration,
       startDate,
       endDate,
       status: true
