@@ -52,6 +52,7 @@ Meteor.methods({
       createdAt: new Date(),
       lastModified: new Date(),
       finishedAt: null,
+      comments: [],
     });
   },
   'moveToRelease'(issueId, releaseId) {
@@ -98,6 +99,7 @@ Meteor.methods({
       createdAt: new Date(),
       lastModified: new Date(),
       finishedAt: null,
+      comments: [],
     });
   },
   'setTodo' (sprintId) {
