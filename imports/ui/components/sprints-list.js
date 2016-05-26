@@ -51,7 +51,7 @@ Template.sprintsList.helpers({
   },
   isTheOnlySprint() {
     const projectId = Template.instance().data.projectId;
-    return Sprints.find({projectId}).count() === 1;
+    return Sprints.find({projectId, status: null}).count() === 1;
   },
   isActive() {
     return Template.instance().data.status === true;

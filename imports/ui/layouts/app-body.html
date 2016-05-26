@@ -47,15 +47,19 @@
                         <a href="{{pathFor route='releaseBacklog' project_id=projectId}}">Releases</a>
                     </li>
                     <li class="{{#if isCurrentRoute 'reports'}}active{{/if}}">
-                        <a href="#">Reports</a>
+                        <a href="{{pathFor route='reports' project_id=projectId}}">Reports</a>
                     </li>
                     <li class="{{#if isCurrentRoute 'issues'}}active{{/if}}">
-                        <a href="#">Issues</a>
+                        <!--<a href="{{pathFor route='issues' project_id=projectId}}">Issues</a>-->
                     </li>
                 </ul>
                 <ul class="nav nav-sidebar">
-                    <li class="{{#if isCurrentRoute 'invite'}}active{{/if}}"><a href="">Invite your team</a></li>
-                    <li class="{{#if isCurrentRoute 'feedback'}}active{{/if}}"><a href="">Give feedback</a></li>
+                    <li class="{{#if isCurrentRoute 'invite'}}active{{/if}}">
+                        <a href="">Invite your team</a>
+                    </li>
+                    <li class="{{#if isCurrentRoute 'feedback'}}active{{/if}}">
+                        <a href="">Give feedback</a>
+                    </li>
                     <!--<li><a href="">One more nav</a></li>-->
                     <!--<li><a href="">Another nav item</a></li>-->
                     <!--<li><a href="">More navigation</a></li>-->

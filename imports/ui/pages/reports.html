@@ -1,0 +1,18 @@
+<template name="reports">
+    <h1 class="page-header">Reports</h1>
+  {{#if hasFinishedSprints}}
+      <select class="form-control" id="selectedSprint">
+        {{#each sprint in sprints}}
+            <option value="{{sprint._id}}">{{sprint.sprintName}}</option>
+        {{/each}}
+      </select>
+      <canvas id="burndownChart" style="width: 100%; height: 100%">
+
+      </canvas>
+  {{else}}
+      <p>
+          There are no finished or active sprints. Start sprints in the
+          <a href="{{pathFor route='productBacklog' project_id=projectId}}">Backlog</a>
+      </p>
+  {{/if}}
+</template>

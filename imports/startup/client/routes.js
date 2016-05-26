@@ -13,6 +13,7 @@ import '../../ui/pages/release-backlog.js';
 import '../../ui/pages/sprint-backlog.js';
 import '../../ui/pages/browse-issue.js';
 import '../../ui/pages/signup-login.js';
+import '../../ui/pages/reports.js';
 import '../../ui/components/release-versions.js';
 import '../../ui/components/release-item-view.js';
 
@@ -111,4 +112,10 @@ Router.route('/projects/:project_id/issues/:issue_id', {
   data: function() {
     return Issues.findOne({_id: this.params.issue_id});
   }
+});
+
+Router.route('/projects/:project_id/reports', {
+  name: 'reports',
+  template: 'reports',
+  layoutTemplate: 'appBody'
 });

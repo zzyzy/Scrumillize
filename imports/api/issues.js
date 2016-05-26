@@ -36,7 +36,8 @@ Meteor.methods({
       assignee: null,
       reporter: Meteor.userId(),
       createdAt: new Date(),
-      lastModified: new Date()
+      lastModified: new Date(),
+      finishedAt: null,
     });
   },
   'moveToRelease'(issueId, releaseId) {
@@ -81,7 +82,8 @@ Meteor.methods({
       assignee: null,
       reporter: Meteor.userId(), // this.userId
       createdAt: new Date(),
-      lastModified: new Date()
+      lastModified: new Date(),
+      finishedAt: null,
     });
   }
 });
