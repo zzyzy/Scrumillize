@@ -39,5 +39,20 @@ Template.sprintBacklog.helpers({
   },
   doneIssues () {
     return Issues.find({sprintId: Template.instance().state.get('sprintId'), status: 'done'});
+  },
+  projectId () {
+    return Template.instance().state.get('projectId');
+  }
+});
+
+Template.sprintBacklog.events({
+  'click .setInProgress' () {
+    Meteor.call('setInProgress', this._id);
+  },
+  'click .setTodo' () {
+    Meteor.call('setTodo', this._id);
+  },
+  'click .setDone' () {
+    Meteor.call('setDone', this._id);
   }
 });

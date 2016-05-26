@@ -6,6 +6,20 @@ import { Issues } from './issues.js';
 
 export const Sprints = new Mongo.Collection('sprints');
 
+if (Meteor.isClient) {
+  Sprints.deny({
+    insert() {
+      return true;
+    },
+    update() {
+      return true;
+    },
+    remove() {
+      return true;
+    },
+  });
+}
+
 Meteor.methods({
   'createSprint'(projectId) {
     check(projectId, String);
@@ -90,5 +104,5 @@ Meteor.methods({
     Sprints.update({_id: target._id}, {$set: {
       position: targetNewPosition
     }});
-  }
+  },
 });

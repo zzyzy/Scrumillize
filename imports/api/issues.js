@@ -6,6 +6,20 @@ import { Projects } from './projects.js';
 
 export const Issues = new Mongo.Collection('issues');
 
+if (Meteor.isClient) {
+  Issues.deny({
+    insert() {
+      return true;
+    },
+    update() {
+      return true;
+    },
+    remove() {
+      return true;
+    },
+  });
+}
+
 Meteor.methods({
   'createNewIssue'(summary, projectId) {
     check(summary, String);
@@ -85,5 +99,20 @@ Meteor.methods({
       lastModified: new Date(),
       finishedAt: null,
     });
-  }
+  },
+  'setTodo' (sprintId) {
+    check(sprintId, String);
+
+    Issues.update({_id: sprintId}, {$set: {status: 'todo'}});
+  },
+  'setInProgress' (sprintId) {
+    check(sprintId, String);
+
+    Issues.update({_id: sprintId}, {$set: {status: 'inprogress'}});
+  },
+  'setDone' (sprintId) {
+    check(sprintId, String);
+
+    Issues.update({_id: sprintId}, {$set: {status: 'done'}});
+  },
 });
