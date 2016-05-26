@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
+import { Factory } from 'meteor/dburles:factory';
+import { faker } from 'meteor/practicalmeteor:faker';
 
 export const Projects = new Mongo.Collection('projects');
 

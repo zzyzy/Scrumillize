@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Factory } from 'meteor/dburles:factory';
+import { faker } from 'meteor/practicalmeteor:faker';
 
 import { Projects } from './projects.js';
 
