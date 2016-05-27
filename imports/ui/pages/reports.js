@@ -82,11 +82,17 @@ Template.reports.onCreated(function () {
       pointBackgroundColor: '#d04437',
       pointBorderWidth: 1,
     };
+    instance.config.data.datasets[1].data.push({
+      x: sprint.startDate,
+      y: totalEstimate
+    });
     Issues.find({sprintId: sprint._id, status: 'done', finishedAt: {$ne: null}}, {sort: {finishedAt: 1}}).forEach(function(issue) {
+      // console.log(issue.summary + " ||| " + issue.finishedAt);
       instance.config.data.datasets[1].data.push({
         x: issue.finishedAt,
         y: totalEstimate - issue.estimate,
       });
+      totalEstimate -= issue.estimate;
     });
 
     instance.chart.update();
