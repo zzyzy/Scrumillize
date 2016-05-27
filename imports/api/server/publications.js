@@ -7,7 +7,7 @@ import { Sprints } from '../sprints.js';
 
 Meteor.publishComposite("everything", {
   find: function() {
-    return Projects.find({});
+    return Projects.find({users: {$elemMatch: {userId: this.userId}}});
   },
   children: [
     {
