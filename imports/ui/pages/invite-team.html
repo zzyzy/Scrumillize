@@ -9,8 +9,8 @@
           <tbody>
           {{#each user in users}}
               <tr>
-                  <td>{{user.emails[0].address}}</td>
-                  <td>{{user.createdAt}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{formatDate user.addedAt}}</td>
               </tr>
           {{/each}}
           </tbody>

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { moment } from 'meteor/momentjs:moment';
 
 import { Projects } from '../../api/projects';
 
@@ -12,20 +13,28 @@ Template.inviteTeam.onCreated(function () {
 
   this.autorun(function () {
     Template.instance().projectId.set(Router.current().params.project_id);
+    console.log(Template.instance().projectId.get());
   });
 });
 
 Template.inviteTeam.helpers({
   users() {
     const project = Projects.findOne({_id: Template.instance().projectId.get()});
-    const users = project.users;
-    return Meteor.users.find({}, {$in: {_id: users}});
+    if (project === null || project === undefined) return;
+    return project.users;
   },
   hasUsers() {
     //TODO project is undefined
     const project = Projects.findOne({_id: Template.instance().projectId.get()});
-    console.log(project);
+    if (project === null || project === undefined) return false;
     return project.users.length > 0;
+  },
+  userEmail(userId) {
+    const user = Meteor.users.findOne({_id: userId});
+    return user.emails[0].address;
+  },
+  formatDate (date) {
+    return moment(date).format('DD/MMM/YY');
   }
 });
 

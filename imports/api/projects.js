@@ -26,12 +26,17 @@ Meteor.methods({
     check(projectName, String);
 
     // Some logic here
+    const currentUser = {
+      userId: Meteor.userId(),
+      email: Meteor.users.findOne({_id: Meteor.userId()}).emails[0].address,
+      addedAt: new Date()
+    };
 
     Projects.insert({
       projectName,
       createdAt: new Date(),
       createdBy: Meteor.userId(),
-      users: [Meteor.userId()]
+      users: [currentUser]
     });
   },
   'createUserForProject' (projectId, email, password) {
@@ -44,6 +49,12 @@ Meteor.methods({
       password: password
     });
 
-    Projects.update({_id: projectId}, {$push: {users: newUserId}});
+    const newUser = {
+      userId: newUserId,
+      email: email,
+      addedAt: new Date()
+    };
+
+    Projects.update({_id: projectId}, {$push: {users: newUser}});
   }
 });

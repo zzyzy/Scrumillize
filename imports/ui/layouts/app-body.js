@@ -34,7 +34,7 @@ Template.appBody.helpers({
 });
 
 Template.appBody.events({
-  'click .logout' () {
+  'click .logout' (event) {
     event.preventDefault();
     Meteor.logout(function (error) {
       if (error) {
