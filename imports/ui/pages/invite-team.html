@@ -1,0 +1,31 @@
+<template name="inviteTeam">
+    <h1 class="page-header">Create new users</h1>
+  {{#if hasUsers}}
+      <table class="table table-responsive">
+          <thead>
+          <th>Email</th>
+          <th>Created At</th>
+          </thead>
+          <tbody>
+          {{#each user in users}}
+              <tr>
+                  <td>{{user.email}}</td>
+                  <td>{{formatDate user.addedAt}}</td>
+              </tr>
+          {{/each}}
+          </tbody>
+      </table>
+  {{/if}}
+    <form class="form-inline" id="createUserInProject">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail3">Email address</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword3"
+                   placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-default">Create user</button>
+    </form>
+</template>

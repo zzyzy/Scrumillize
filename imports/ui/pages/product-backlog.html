@@ -1,0 +1,9 @@
+<template name="productBacklog">
+    <h1 class="page-header">Backlog</h1>
+
+  {{#each sprintLists}}
+    {{> sprintsList}}
+  {{/each}}
+
+  {{> backlogList}}
+</template>

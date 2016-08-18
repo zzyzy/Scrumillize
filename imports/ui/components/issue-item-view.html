@@ -1,0 +1,285 @@
+<template name="issueItemView">
+    <style>
+        .section-header {
+            padding-bottom: 6px;
+            border-bottom: 0.5px #E6E6E6 solid;
+        }
+
+        .item-title {
+            color: #848484;
+        }
+
+        .hidden-input {
+            border: 0;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-default" id="editIssue"><span class="glyphicon glyphicon-pencil"
+                                                                               aria-hidden="true"></span>
+                Edit
+            </button>
+            <button type="button" class="btn btn-default" id="commentIssue"><span class="glyphicon glyphicon-comment"
+                                                                                  aria-hidden="true"></span>
+                Comment
+            </button>
+
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" id="assignIssue">Assign</button>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                        More
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <!--<li><a href="#">Action</a></li>-->
+                        <!--<li><a href="#">Another action</a></li>-->
+                        <!--<li><a href="#">Something else here</a></li>-->
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" id="deleteIssue">Delete</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" id="setTodo">To Do</button>
+                <button type="button" class="btn btn-default" id="setInProgress">In Progress</button>
+                <button type="button" class="btn btn-default" id="setDone">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="section-header">Details</h4>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="item-title">Type:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                <img src="/{{type}}.svg" width="16" height="16">
+                            <div class="btn-group" role="group">
+                                <a class="dropdown-toggle" id="issueTypeDropdown" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="true" href="#">{{getType}}</a>
+                                <ul class="dropdown-menu" aria-labelledby="issueTypeDropdown">
+                                    <li><a href="#" id="setToStory"><img src="/story.svg" width="16" height="16"> Story</a>
+                                    </li>
+                                    <li><a href="#" id="setToTask"><img src="/task.svg" width="16" height="16"> Task</a>
+                                    </li>
+                                    <li><a href="#" id="setToEpic"><img src="/epic.svg" width="16" height="16"> Epic</a>
+                                    </li>
+                                    <li><a href="#" id="setToBug"><img src="/bug.svg" width="16" height="16"> Bug</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="item-title">Status:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><span class="label label-success">{{getStatus}}</span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="item-title">Priority:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                <img src="/{{priority}}.svg" width="16" height="16">
+                            <div class="btn-group" role="group">
+                                <a class="dropdown-toggle" id="priorityTypeDropdown" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="true" href="#">{{getPriority}}</a>
+                                <ul class="dropdown-menu" aria-labelledby="priorityTypeDropdown">
+                                    <li><a href="#" id="setPriorityHighest"><img src="/highest.svg" width="16"
+                                                                                 height="16"> Highest</a></li>
+                                    <li><a href="#" id="setPriorityHigh"><img src="/high.svg" width="16" height="16">
+                                        High</a></li>
+                                    <li><a href="#" id="setPriorityMedium"><img src="/medium.svg" width="16"
+                                                                                height="16"> Medium</a></li>
+                                    <li><a href="#" id="setPriorityLow"><img src="/low.svg" width="16" height="16"> Low</a>
+                                    </li>
+                                    <li><a href="#" id="setPriorityLowest"><img src="/lowest.svg" width="16"
+                                                                                height="16"> Lowest</a></li>
+                                </ul>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="item-title">Resolution:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>{{getResolution}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="item-title">Affects Version:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>{{releaseName affectedVersion}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="item-title">Fix Version:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <!--<button type="button" class="openReleaseChooser" data-toggle="modal"-->
+                            <!--data-target="#addToRelease">{{releaseName releaseId}}</button>-->
+                            <a href="#" class="openReleaseChooser" data-toggle="modal"
+                               data-target="#addToRelease">{{releaseName releaseId}}</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="item-title">Sprint:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><a href="#">{{sprintName sprintId}}</a></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="item-title">Story Points:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><input class="hidden-input" id="storyPoints" type="number" value="{{estimate}}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="section-header">People</h4>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="item-title">Assignee:</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>{{getAssignee}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="item-title">Reporter:</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>{{getReporter}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="section-header">Description</h4>
+            <textarea class="form-control" rows="5" id="description">{{description}}</textarea>
+        </div>
+        <div class="col-md-4">
+            <h4 class="section-header">Dates</h4>
+            <div class="row">
+                <div class="col-md-5">
+                    <p class="item-title">Created:</p>
+                </div>
+                <div class="col-md-7">
+                    <p>{{formatDate createdAt}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <p class="item-title">Updated:</p>
+                </div>
+                <div class="col-md-7">
+                    <p>{{formatDate lastModified}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="section-header">Comments</h4>
+          {{#if ifHasComments}}
+            {{#each comment in comments}}
+                <div class="well">
+                  {{comment.content}}
+                    <small>by {{comment.author}}</small>
+                </div>
+            {{/each}}
+          {{else}}
+              <p>There are no comments yet on this issue.</p>
+          {{/if}}
+          {{#if ifCommentMode}}
+              <textarea class="form-control" rows="5" id="comment"></textarea>
+              <button type="button" id="addComment" class="btn btn-default">Add</button>
+              <button type="button" id="cancelComment" class="btn btn-default">Cancel</button>
+          {{else}}
+              <button type="button" id="gotoCommentMode" class="btn btn-default">
+                  <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                  Comment
+              </button>
+          {{/if}}
+        </div>
+        <!--<div class="col-md-4">-->
+        <!--<h4 class="section-header">Agile</h4>-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-5">-->
+        <!--<p class="item-title">Active Sprint:</p>-->
+        <!--</div>-->
+        <!--<div class="col-md-7">-->
+        <!--<p></p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-5">-->
+        <!--<p class="item-title">Completed Sprint:</p>-->
+        <!--</div>-->
+        <!--<div class="col-md-7">-->
+        <!--<p></p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+  {{> addToReleaseModal}}
+</template>
+
+<template name="addToReleaseModal">
+    <div class="modal fade" id="addToRelease" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add to release</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                      {{#each release in releases}}
+                        {{#with release}}
+                          {{#if isChosenRelease release._id}}
+                              <a href="#" class="list-group-item active chooseRelease">{{release.releaseName}}</a>
+                          {{else}}
+                              <a href="#" class="list-group-item chooseRelease">{{release.releaseName}}</a>
+                          {{/if}}
+                        {{/with}}
+                      {{/each}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default confirmRelease" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>

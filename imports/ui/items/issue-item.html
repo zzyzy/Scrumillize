@@ -1,0 +1,16 @@
+<template name="issueItem">
+    <tr>
+        <td><img src="/{{toLowerCase type}}.svg" width="16" height="16"></td>
+        <td><img src="/{{toLowerCase priority}}.svg" width="16" height="16"></td>
+        <td><a href="{{pathFor route='issue' project_id=projectId issue_id=_id}}" class="text-nowrap">{{key}}</a></td>
+        <td class="col-md-12">{{summary}}</td>
+
+      {{#if isInRelease releaseId}}
+          <td><span class="label label-info">{{releaseName releaseId}}</span></td>
+      {{/if}}
+
+      {{#if isEstimated estimate}}
+          <td><span class="badge">{{estimate}}</span></td>
+      {{/if}}
+    </tr>
+</template>

@@ -1,0 +1,8 @@
+<template name="releaseItem">
+    <tr>
+      <td><a href="{{pathFor route='release' project_id=projectId release_id=_id}}">{{releaseName}}</a></td>
+      <td>{{description}}</td>
+      <td>{{formatDate(startDate)}}</td>
+      <td>{{formatDate(endDate)}}</td>
+    </tr>
+</template>

@@ -1,0 +1,11 @@
+<template name="projectsList">
+    <h2 class="sub-header">Projects</h2>
+    <form class="newProject">
+        <input type="text" name="projectName" placeholder="Type project name here">
+    </form>
+    <ul>
+      {{#each projects}}
+        {{> projectItem}}
+      {{/each}}
+    </ul>
+</template>

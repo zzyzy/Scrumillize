@@ -1,0 +1,7 @@
+<template name="releaseBacklog">
+    <h1 class="page-header">Release Backlog of {{projectName}}</h1>
+
+    <a href="{{pathFor route='manageReleases' project_id=_id}}">Manage Versions</a>
+
+    {{> releasesList}}
+</template>

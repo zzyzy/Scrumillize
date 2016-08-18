@@ -1,0 +1,10 @@
+<template name="releaseVersions">
+  <form class="form-inline newVersion">
+    <input type="text" class="form-control" name="releaseName" placeholder="Release Name">
+    <input type="text" class="form-control" name="description" placeholder="Description">
+    <input type="date" class="form-control" name="startDate" placeholder="Start Date">
+    <input type="date" class="form-control" name="endDate" placeholder="End Date">
+    <input type="submit" class="form-control" >
+  </form>
+  {{> releasesList}}
+</template>
